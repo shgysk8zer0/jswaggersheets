@@ -20,7 +20,7 @@ Swagger.setStyle(footer, {
 	':host': {
 		background: 'red',
 	}
-});
+}).then(sheet => console.log({ sheet }), console.error);
 
 konami().then(() => {
 	Swagger.addStyle(document.documentElement, {

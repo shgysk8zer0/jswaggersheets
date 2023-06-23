@@ -13,39 +13,21 @@
 /**
  * Converts a JavaScript object into a CSS string.
  *
- * @todo Support CSS Nesting
+ * @todo Support CSS Nesting, media queries, etc
  * @param {Object} obj - The object representing CSS rules.
  * @param {string} [id=''] - Optional ID prefix to add to selectors.
  * @returns {string} - The generated CSS string.
  */
 function stringifyRules(obj, id = '') {
-	let css = '';
-	const hasId = typeof id === 'string' && id.length !== 0;
-
-	const processRules = (rules, selector = '') => {
-		for (const key in rules) {
-			const value = rules[key];
-
-			if (typeof value === 'object') {
-				if (/^[^A-Za-z-.#[]/.test(key)) {
-					css += `${key} {\n`;
-					processRules(value, selector);
-					css += '}\n';
-				} else {
-					const nestedSelector = typeof selector === 'string' && selector.length !== 0
-						? `${selector} ${key}` : key;
-					processRules(value, nestedSelector);
-				}
-			} else {
-				const prefixedSelector = hasId ? `#${id} ${selector}` : selector;
-				css += `${prefixedSelector} {\n  ${key}: ${value};\n}\n`;
-			}
-		}
-	};
-
-	processRules(obj);
-
-	return css;
+	if (typeof id === 'string' && id.length !== 0) {
+		return Object.entries(obj).map(([selector, rule]) => {
+			return `#${id} ${selector} {${Object.entries(rule).map(([key, val]) => `${key}:${val};`).join('')}}`;
+		}).join('');
+	} else {
+		return Object.entries(obj).map(([selector, rule]) => {
+			return `${selector} {${Object.entries(rule).map(([key, val]) => `${key}:${val};`).join('')}}`;
+		}).join('');
+	}
 }
 
 /**
@@ -72,12 +54,13 @@ export async function createSheet(rules, { media, disabled, baseURL, target } = 
 	if (typeof target === 'string') {
 		return createSheet(rules, { media, disabled, baseURL, target: document.querySelector(target) });
 	} else {
-		if (target instanceof Element && target.id.length === 0) {
+		const hasShadow = target instanceof Element && ! Object.is(target.shadowRoot, null);
+		if (target instanceof Element && target.id.length === 0 && ! hasShadow) {
 			target.id = generateId();
 		}
 
 		const sheet = new CSSStyleSheet({ media, disabled, baseURL });
-		const css = stringifyRules(rules, target instanceof Element ? target.id : null);
+		const css = stringifyRules(rules, target instanceof Element && ! hasShadow ? target.id : null);
 		await sheet.replace(css);
 		return sheet;
 	}
