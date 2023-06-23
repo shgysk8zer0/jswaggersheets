@@ -54,12 +54,13 @@ export async function createSheet(rules, { media, disabled, baseURL, target } = 
 	if (typeof target === 'string') {
 		return createSheet(rules, { media, disabled, baseURL, target: document.querySelector(target) });
 	} else {
-		if (target instanceof Element && target.id.length === 0) {
+		const hasShadow = target instanceof Element && ! Object.is(target.shadowRoot, null);
+		if (target instanceof Element && target.id.length === 0 && ! hasShadow) {
 			target.id = generateId();
 		}
 
 		const sheet = new CSSStyleSheet({ media, disabled, baseURL });
-		const css = stringifyRules(rules, target instanceof Element ? target.id : null);
+		const css = stringifyRules(rules, target instanceof Element && ! hasShadow ? target.id : null);
 		await sheet.replace(css);
 		return sheet;
 	}

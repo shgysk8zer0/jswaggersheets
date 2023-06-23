@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed bug in creating CSS strings
+- Fixed setting styles for elements that have shadow root
 
 ## [v1.0.2] - 2023-06-23
 
