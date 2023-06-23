@@ -92,9 +92,15 @@ export async function createSheet(rules, { media, disabled, baseURL, target } = 
 export function adoptSheets(target, ...sheets) {
 	if (typeof target === 'string') {
 		adoptSheets(document.querySelector(target), ...sheets);
+	} else if (! (target instanceof Node)) {
+		throw new TypeError('Target must be a Document, Element, or ShadowRoot.');
 	} else if ('adoptedStyleSheets' in target) {
 		target.adoptedStyleSheets = sheets;
-	} else if ('shadowRoot' in target && 'adoptedStyleSheets' in target.shadowRoot) {
+	} else if (
+		'shadowRoot' in target
+		&& ! Object.is(target.shadowRoot, null)
+		&& 'adoptedStyleSheets' in target.shadowRoot
+	) {
 		target.shadowRoot.adoptedStyleSheets = sheets;
 	} else if (target instanceof Element) {
 		adoptSheets(target.ownerDocument, ...sheets);
