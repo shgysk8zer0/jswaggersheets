@@ -39,13 +39,13 @@ A minimal and native take on CSS-in-JS
 ## Installation
 
 ```bash
-npm i jswaggersheets
+npm i @shgysk8zer0/jswaggersheets
 ```
 
 ## Example
 
 ```js
-import * as Swagger from 'jswaggersheets';
+import * as Swagger from '@shgysk8zer0/jswaggersheets';
 import { btnStyles } from './styles.js';
 
 // Set Document-wide styles

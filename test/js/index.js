@@ -2,7 +2,7 @@ import '@shgysk8zer0/polyfills';
 import '@shgysk8zer0/components/bacon-ipsum.js';
 import '@shgysk8zer0/components/github/user.js';
 import { konami } from '@shgysk8zer0/konami';
-import * as Swagger from 'jswaggersheets';
+import * as Swagger from '@shgysk8zer0/jswaggersheets';
 import { base } from './styles.js';
 
 Swagger.setStyle(document, base);
