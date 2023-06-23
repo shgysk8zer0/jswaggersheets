@@ -1,11 +1,28 @@
 {
-  "name": "npm-template",
-  "version": "1.0.4",
+  "name": "jswaggersheets",
+  "version": "1.0.0",
   "description": "A template repo for npm packages",
+  "keywords": [
+    "CSS-in-JS",
+    "CSS Modules",
+    "constructable stylesheets",
+    "adopted stylesheets",
+    "styling",
+    "UI",
+    "web components",
+    "custom elements",
+    "component",
+    "scoped styles",
+    "dynamic styles"
+  ],
   "type": "module",
-  "main": "index.cjs",
-  "module": "index.js",
+  "main": "./swagger.cjs",
+  "module": "./swagger.js",
   "exports": {
+    "./": {
+      "import": "./swagger.js",
+      "require": "./swagger.cjs"
+    },
     "./*": {
       "import": "./*.js",
       "require": "./*.cjs"
@@ -19,9 +36,9 @@
     "test": "npm run lint:js && npm run build",
     "preversion": "npm test",
     "prepare": "npm run build",
-    "dev": "rollup -cw",
+    "start": "http-server ./ -c-1 --port 8080 -a localhost -o /test/",
     "lint:js": "eslint .",
-    "fix:js": "eslint. --fix",
+    "fix:js": "eslint . --fix",
     "build": "npm run build:js",
     "build:js": "rollup -c rollup.config.js",
     "create:lock": "npm i --package-lock-only",
@@ -32,15 +49,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shgysk8zer0/npm-template.git"
+    "url": "git+https://github.com/shgysk8zer0/jswaggersheets.git"
   },
   "author": "Chris Zuber <admin@kernvalley.us>",
   "license": "MIT",
+    "funding": [
+    {
+      "type": "librepay",
+      "url": "https://liberapay.com/shgysk8zer0"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/shgysk8zer0"
+    }
+  ],
   "bugs": {
-    "url": "https://github.com/shgysk8zer0/npm-template/issues"
+    "url": "https://github.com/shgysk8zer0/jswaggersheets/issues"
   },
-  "homepage": "https://github.com/shgysk8zer0/npm-template#readme",
+  "homepage": "https://github.com/shgysk8zer0/jswaggersheets#readme",
   "devDependencies": {
-    "@shgysk8zer0/js-utils": "^1.0.0"
+    "@shgysk8zer0/js-utils": "^1.0.0",
+    "http-server": "^14.1.1"
   }
 }
