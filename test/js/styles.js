@@ -30,16 +30,5 @@ export const base = {
 	},
 	'#footer': {
 		'grid-area': 'footer',
-		'& github-user': {
-			'transform': 'scale(2)'
-		}
 	},
-	'@media (prefers-color-scheme: dark)': {
-		'#main': {
-			color: 'red',
-		},
-		'@supports (display: block)': {
-			'#main': { background: 'white' }
-		}
-	}
 };
