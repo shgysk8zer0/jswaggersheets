@@ -1,6 +1,6 @@
 {
-  "name": "jswaggersheets",
-  "version": "1.0.0",
+  "name": "@shgysk8zer0/jswaggersheets",
+  "version": "1.0.1",
   "description": "A template repo for npm packages",
   "keywords": [
     "CSS-in-JS",
@@ -53,7 +53,7 @@
   },
   "author": "Chris Zuber <admin@kernvalley.us>",
   "license": "MIT",
-    "funding": [
+  "funding": [
     {
       "type": "librepay",
       "url": "https://liberapay.com/shgysk8zer0"

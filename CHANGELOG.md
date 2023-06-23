@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.1] - 2023-06-23
+
+### Changed
+- Renamed to `@shgysk8zer0/jswaggersheets`
+
 ## [v1.0.0] - 2023-06-22
 
 Initial Release
