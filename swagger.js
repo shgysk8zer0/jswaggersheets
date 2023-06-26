@@ -4,7 +4,7 @@
  * A CSS-in-JS / CSS Modules library that leverages constructable stylesheets and adopted stylesheets.
  * Provides a minimal and lightweight solution for defining styles using JavaScript objects and applying them to the DOM.
  *
- * @version 1.0.0
+ * @version 1.0.4
  * @copyright 2023 Chris Zuber <admin@kernvalley.us>
  * @license MIT
  * @see {@link https://github.com/shgysk8zer0/jswaggersheets} for the full documentation, examples, and usage details.
@@ -72,21 +72,21 @@ export async function createSheet(rules, { media, disabled, baseURL, target } = 
  * @param {HTMLElement|ShadowRoot|string} target - The target element or a CSS selector for the target element.
  * @param {...CSSStyleSheet} sheets - The CSSStyleSheet(s) to be adopted.
  */
-export function adoptSheets(target, ...sheets) {
+export async function adoptSheets(target, ...sheets) {
 	if (typeof target === 'string') {
-		adoptSheets(document.querySelector(target), ...sheets);
+		await adoptSheets(document.querySelector(target), ...sheets);
 	} else if (! (target instanceof Node)) {
 		throw new TypeError('Target must be a Document, Element, or ShadowRoot.');
 	} else if ('adoptedStyleSheets' in target) {
-		target.adoptedStyleSheets = sheets;
+		target.adoptedStyleSheets = await Promise.all(sheets);
 	} else if (
 		'shadowRoot' in target
 		&& ! Object.is(target.shadowRoot, null)
 		&& 'adoptedStyleSheets' in target.shadowRoot
 	) {
-		target.shadowRoot.adoptedStyleSheets = sheets;
+		target.shadowRoot.adoptedStyleSheets = await Promise.all(sheets);
 	} else if (target instanceof Element) {
-		adoptSheets(target.ownerDocument, ...sheets);
+		await adoptSheets(target.ownerDocument, ...sheets);
 	}
 }
 
@@ -98,13 +98,13 @@ export function adoptSheets(target, ...sheets) {
  * @param {Object} options - Optional settings for adopting the stylesheet.
  * @param {boolean} options.replace - Determines whether to replace existing stylesheets or append the new one.
  */
-export function adoptSheet(target, sheet, { replace = true }) {
+export async function adoptSheet(target, sheet, { replace = true } = {}) {
 	if (replace) {
-		adoptSheets(target, sheet);
+		await adoptSheets(target, sheet);
 	} else if (target instanceof Document || target instanceof ShadowRoot) {
-		adoptSheets(target, ...target.adoptedStyleSheets, sheet);
+		await adoptSheets(target, ...target.adoptedStyleSheets, sheet);
 	} else {
-		adoptSheets(target.ownerDocument, ...target.ownerDocument.adoptedStyleSheets, sheet);
+		await adoptSheets(target.ownerDocument, ...target.ownerDocument.adoptedStyleSheets, sheet);
 	}
 }
 
@@ -118,7 +118,7 @@ export function adoptSheet(target, sheet, { replace = true }) {
  */
 export async function setStyle(target, rules, { media, disabled, baseURL } = {}) {
 	const sheet = await createSheet(rules, { media, disabled, baseURL, target });
-	adoptSheet(target, sheet, { replace: true });
+	await adoptSheet(target, sheet, { replace: true });
 	return sheet;
 }
 
@@ -135,7 +135,7 @@ export async function setStyle(target, rules, { media, disabled, baseURL } = {})
  */
 export async function addStyle(target, rules, { media, disabled, baseURL } = {}) {
 	const sheet = await createSheet(rules, { media, disabled, baseURL, target });
-	adoptSheet(target, sheet, { replace: false });
+	await adoptSheet(target, sheet, { replace: false });
 	return sheet;
 }
 

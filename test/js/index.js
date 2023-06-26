@@ -3,7 +3,9 @@ import '@shgysk8zer0/components/bacon-ipsum.js';
 import '@shgysk8zer0/components/github/user.js';
 import { konami } from '@shgysk8zer0/konami';
 import * as Swagger from '@shgysk8zer0/jswaggersheets';
-import { base } from './styles.js';
+import { base, footerStyles } from './styles.js';
+
+const sheet = Swagger.createSheet(footerStyles);
 
 Swagger.setStyle(document, base);
 Swagger.addStyle(document, {
@@ -16,11 +18,7 @@ Swagger.addStyle(document, {
 const footer = document.getElementById('footer');
 footer.attachShadow({ mode: 'open' });
 footer.shadowRoot.append(...footer.children);
-Swagger.setStyle(footer, {
-	':host': {
-		background: 'red',
-	}
-}).then(sheet => console.log({ sheet }), console.error);
+Swagger.adoptSheet(footer, sheet);
 
 konami().then(() => {
 	Swagger.addStyle(document.documentElement, {
