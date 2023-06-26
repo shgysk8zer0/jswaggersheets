@@ -3,6 +3,7 @@ const CDN = 'https://cdn.kernvalley.us/';
 export const base = {
 	':root': {
 		margin: '0',
+		'scrollbar-color': '#c40707 rgba(0, 0, 0, 0.7)',
 	},
 	body: {
 		margin: 0,
@@ -17,10 +18,15 @@ export const base = {
 		'background-fit': 'cover',
 	},
 	'#nav': {
+		'-webkit-backdrop-filter': 'blur(3px)',
+		'backdrop-filter': 'blur(7px)',
+		'background-color': '#c40707aa',
+		'font-size': '1.2em',
+		gap: '5px',
 		'grid-area': 'nav',
-		position: 'sticky',
-		top: '0',
-		'background-color': 'red',
+		'display': 'flex',
+		'position': 'sticky',
+		top: 0,
 	},
 	'#main': {
 		'grid-area': 'main',
@@ -30,5 +36,13 @@ export const base = {
 	},
 	'#footer': {
 		'grid-area': 'footer',
+	},
+};
+
+export const footerStyles = {
+	':host': {
+		'background-color': '#232323',
+		'border-top': '1px solid #dadada',
+		'padding': '1.3em',
 	},
 };

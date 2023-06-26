@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v1.0.4] - 2023-06-25
+
+### Changed
+- Adopting stylesheets is now async
+
 ## [v1.0.3] - 2023-06-23
 
 ### Fixed
