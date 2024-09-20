@@ -34,9 +34,9 @@
   },
   "private": false,
   "scripts": {
-    "test": "npm run lint:js && npm run build",
-    "preversion": "npm test",
-    "prepare": "npm run build",
+    "test": "npm run lint:js",
+    "preversion": "npm test && npm run build",
+    "prepare": "npm test && npm run build",
     "start": "http-server ./ -c-1 --port 8080 -a localhost -o /test/",
     "lint:js": "eslint .",
     "fix:js": "eslint . --fix",
@@ -69,6 +69,7 @@
   },
   "homepage": "https://github.com/shgysk8zer0/jswaggersheets#readme",
   "devDependencies": {
+    "@shgysk8zer0/eslint-config": "^1.0.1",
     "@shgysk8zer0/js-utils": "^1.0.1",
     "http-server": "^14.1.1"
   }
